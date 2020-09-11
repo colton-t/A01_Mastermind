@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel {
-	private static final long serialVersionUID = -6746198111706791600L;
+	
 	private int turn = 0;
 	private int guess = 0;
 	private BallColors[] row;

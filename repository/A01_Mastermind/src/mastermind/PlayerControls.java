@@ -9,8 +9,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class PlayerControls extends JPanel {
-	private static final long serialVersionUID = 5687739240871730792L;
 	
 	private JButton btnRed;
 	private JButton btnYellow;
@@ -110,7 +110,6 @@ public class PlayerControls extends JPanel {
 		btnYellow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Board b = new Board();
-				
 				Graphics g = getGraphics();
 				g.setColor(Color.yellow);
 				g.drawOval(( 1) * 60, ( 1) * 60, 40, 40);

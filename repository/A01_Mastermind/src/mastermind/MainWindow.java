@@ -8,10 +8,8 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BorderLayout;
 
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
-
-	private static final long serialVersionUID = 5415959675461106180L;
-
 	/**
 	 * Launch the application.
 	 */
