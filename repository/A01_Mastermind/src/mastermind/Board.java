@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 public class Board extends JPanel {
 	
 	private int turn = 9;
-	private int guess = 0;
+	public int guess = 0;
 	private int rows = 10;
 	private int coloumns = 4;
 	
@@ -29,6 +29,7 @@ public class Board extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param  
 	 */
 	public Board() {
 		//set background color
@@ -117,8 +118,9 @@ public class Board extends JPanel {
 					guess = 0;
 					CodeLogic.checkGuess();
 				}
-				if(turn == 0) {
-					
+				else if(turn == 0) {
+					CodeLogic.loseGame();
+					turn--;
 				}
 			}
 		});
@@ -223,10 +225,15 @@ public class Board extends JPanel {
 		btnRed.setBackground(Color.RED);
 		btnRed.setOpaque(true);
 	}
+	
 	private void paintCircle(Color c) {
 		Graphics g = getGraphics();
 		g.setColor(c);
 		g.drawOval((guess+1) * 60, (turn+1) * 45, 30, 30);
 		g.fillOval((guess+1) * 60, (turn+1) * 45, 30, 30);
+	}
+	
+	public int getGuess() {
+		return guess;
 	}
 }

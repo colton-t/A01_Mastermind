@@ -8,6 +8,7 @@ public class CodeLogic {
 	public static ArrayList<BallColors> secretCode = new ArrayList<>();
 	public static ArrayList<BallColors> usersGuesses = new ArrayList<>();
 	public static ArrayList<PegColors> pegResults = new ArrayList<>();
+	private static int turn = 1;
 
 	public static ArrayList<BallColors> generateSecretCode() {
 		
@@ -30,11 +31,13 @@ public class CodeLogic {
 	 * Checks the users guess to the generated secret code.
 	 */
 	public static void checkGuess() {
+		turn++;
 		//Compares the secret code with the users guess
 		if(secretCode.equals(usersGuesses)) {
 			System.out.println("YOU WIN!");
 			//TODO Process win conditions here
-		} else {
+		} 
+		else {
 			//create a copy of the secret code
 			ArrayList<BallColors> pegsSecretCode = (ArrayList<BallColors>) secretCode.clone();
 			
@@ -59,6 +62,11 @@ public class CodeLogic {
 			
 			pegResults.clear();
 			usersGuesses.clear();
+			
 		}
+	}
+	
+	public static void loseGame() {
+		System.out.println("You Lose.");
 	}
 }
