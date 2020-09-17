@@ -5,24 +5,17 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Random;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel {
 	
-	private static Random rand = new Random();
 	private int turn = 9;
 	private int guess = 0;
 	private int rows = 10;
 	private int coloumns = 4;
-	ArrayList<BallColors> secretCode = new ArrayList<>();
-	ArrayList<BallColors> usersGuesses = new ArrayList<>();
-	ArrayList<PegColors> pegResults = new ArrayList<>();
 	
 	private JButton btnRed;
 	private JButton btnYellow;
@@ -63,6 +56,7 @@ public class Board extends JPanel {
 		
 		
 		//create control buttons
+		//create new game button
 		createCheckBtn();
 		add(btnCheck);
 		
@@ -73,16 +67,7 @@ public class Board extends JPanel {
 		//TODO
 		
 		//create secret code
-		secretCode = generateSecretCode();
-	}
-	
-	private ArrayList<BallColors> generateSecretCode() {
-		ArrayList<BallColors> returnedSecretCode = new ArrayList<>();
-		for(int i = 0; i < 4; i++) {
-			returnedSecretCode.add(BallColors.values()[rand.nextInt(BallColors.values().length)]);
-		}
-		System.out.println(returnedSecretCode);
-		return returnedSecretCode;
+		CodeLogic.generateSecretCode();
 	}
 
 	@Override
@@ -110,7 +95,7 @@ public class Board extends JPanel {
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guess = 0;
-				usersGuesses.clear(); //clear the users guesses from guess array.
+				CodeLogic.usersGuesses.clear(); //clear the users guesses from guess array.
 				Graphics g = getGraphics();
 				g.setColor(Color.gray);
 				for (int x = 0; x < coloumns; x++) {
@@ -130,7 +115,7 @@ public class Board extends JPanel {
 				if(guess > 3 && turn > 0) {
 					turn--;
 					guess = 0;
-					checkGuess();
+					CodeLogic.checkGuess();
 				}
 				if(turn == 0) {
 					
@@ -140,34 +125,6 @@ public class Board extends JPanel {
 		btnCheck.setMinimumSize(new Dimension(80, 30));
 	}
 	
-	protected void checkGuess() {
-		//Compares the secret code with the users guess
-		if(secretCode.equals(usersGuesses)) {
-			System.out.println("YOU WIN!");
-			//TODO Process win conditions here
-		} else {
-			System.out.println("Process pegs");
-			ArrayList<BallColors> pegsUserGuess = (ArrayList<BallColors>) usersGuesses.clone();
-			for(int i = 0; i < 4; i++) {
-				if(secretCode.contains(pegsUserGuess.get(i))){ //if the secret code even has the element
-					if(secretCode.get(i) == pegsUserGuess.get(i)) { //if on the same index
-						//right guess, right position (black peg)
-						pegResults.add(PegColors.BLACK);
-						pegsUserGuess.set(i, null);
-					} else { //right guess, wrong position (white peg)
-						pegResults.add(PegColors.WHITE);
-						pegsUserGuess.set(i, null);
-					}
-				}
-			}
-			//display pegs here
-			System.out.println(pegResults);
-			
-			pegResults.clear();
-			usersGuesses.clear();
-		}
-	}
-
 	private void createBlackBtn() {
 		btnBlack = new JButton("");
 		btnBlack.setBounds(136, 538, 80, 30);
@@ -176,12 +133,13 @@ public class Board extends JPanel {
 				if (guess < 4) {
 					paintCircle(Color.BLACK);
 					guess++;
-					usersGuesses.add(BallColors.BLACK); //add black to guess array
+					CodeLogic.addUserGuess(BallColors.BLACK); // //add black to guess array
 					}
 			}
 		});
 		btnBlack.setMinimumSize(new Dimension(80, 30));
 		btnBlack.setBackground(Color.BLACK);
+		btnBlack.setOpaque(true);
 	}
 	private void createWhiteBtn() {
 		btnWhite = new JButton("");
@@ -191,12 +149,13 @@ public class Board extends JPanel {
 				if (guess < 4) {
 					paintCircle(Color.WHITE);
 					guess++;
-					usersGuesses.add(BallColors.WHITE); //add white to guess array
+					CodeLogic.addUserGuess(BallColors.WHITE); // //add white to guess array
 					}
 			}
 		});
 		btnWhite.setMinimumSize(new Dimension(80, 30));
 		btnWhite.setBackground(Color.WHITE);
+		btnWhite.setOpaque(true);
 	}
 	private void createGreenBtn() {
 		btnGreen = new JButton("");
@@ -206,12 +165,13 @@ public class Board extends JPanel {
 				if (guess < 4) {
 					paintCircle(Color.GREEN);
 					guess++;
-					usersGuesses.add(BallColors.GREEN); //add green to guess array
+					CodeLogic.addUserGuess(BallColors.GREEN); //add green to guess array
 					}
 			}
 		});
 		btnGreen.setMinimumSize(new Dimension(80, 30));
 		btnGreen.setBackground(Color.GREEN);
+		btnGreen.setOpaque(true);
 	}
 	private void createBlueBtn() {
 		btnBlue = new JButton("");
@@ -221,12 +181,13 @@ public class Board extends JPanel {
 				if (guess < 4) {
 					paintCircle(Color.BLUE);
 					guess++;
-					usersGuesses.add(BallColors.BLUE); //add blue to guess array
+					CodeLogic.addUserGuess(BallColors.BLUE); // //add blue to guess array
 					}
 			}
 		});
 		btnBlue.setMinimumSize(new Dimension(80, 30));
 		btnBlue.setBackground(Color.BLUE);
+		btnBlue.setOpaque(true);
 	}
 	private void createYellowBtn() {
 		btnYellow = new JButton("");
@@ -236,13 +197,14 @@ public class Board extends JPanel {
 				if (guess < 4) {
 					paintCircle(Color.YELLOW);
 					guess++;
-					usersGuesses.add(BallColors.YELLOW); //add yellow to guess array
+					CodeLogic.addUserGuess(BallColors.YELLOW); // //add yellow to guess array
 					}
 
 			}
 		});
 		btnYellow.setMinimumSize(new Dimension(80, 30));
 		btnYellow.setBackground(Color.YELLOW);
+		btnYellow.setOpaque(true);
 	}
 	private void createRedBtn() {
 		btnRed = new JButton("");
@@ -253,12 +215,13 @@ public class Board extends JPanel {
 				if (guess < 4) {
 					paintCircle(Color.RED);
 					guess++;
-					usersGuesses.add(BallColors.RED); //add red to guess array
+					CodeLogic.addUserGuess(BallColors.RED); //add red to guess array
 					}
 			}
 		});
 		btnRed.setMinimumSize(new Dimension(80, 30));
 		btnRed.setBackground(Color.RED);
+		btnRed.setOpaque(true);
 	}
 	private void paintCircle(Color c) {
 		Graphics g = getGraphics();
