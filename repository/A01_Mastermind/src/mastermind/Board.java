@@ -25,6 +25,7 @@ public class Board extends JPanel {
 	private JButton btnBlack;
 	private JButton btnCheck;
 	private JButton btnClear;
+	private JButton btnNewGame;
 	
 
 	/**
@@ -64,11 +65,29 @@ public class Board extends JPanel {
 		createClearBtn();
 		add(btnClear);
 		
+		createNewGame();
+		add(btnNewGame);
+		
+		
 		//create pegs
 		//TODO
 		
 		//create secret code
 		CodeLogic.generateSecretCode();
+	}
+
+	private void createNewGame() {
+		btnNewGame = new JButton("New Game");
+		btnNewGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				turn = 9;
+				guess = 0;
+				repaint();
+				CodeLogic.clearSecretCode();
+				CodeLogic.generateSecretCode();
+			}
+		});
+		btnNewGame.setBounds(288, 500, 100, 30);
 	}
 
 	@Override
@@ -92,7 +111,7 @@ public class Board extends JPanel {
 	
 	private void createClearBtn() {
 		btnClear = new JButton("Clear");
-		btnClear.setBounds(226, 500, 80, 30);
+		btnClear.setBounds(136, 500, 80, 30);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guess = 0;
@@ -142,6 +161,7 @@ public class Board extends JPanel {
 		btnBlack.setMinimumSize(new Dimension(80, 30));
 		btnBlack.setBackground(Color.BLACK);
 		btnBlack.setOpaque(true);
+		btnBlack.setBorderPainted(false);
 	}
 	private void createWhiteBtn() {
 		btnWhite = new JButton("");
@@ -158,6 +178,7 @@ public class Board extends JPanel {
 		btnWhite.setMinimumSize(new Dimension(80, 30));
 		btnWhite.setBackground(Color.WHITE);
 		btnWhite.setOpaque(true);
+		btnWhite.setBorderPainted(false);
 	}
 	private void createGreenBtn() {
 		btnGreen = new JButton("");
@@ -174,6 +195,7 @@ public class Board extends JPanel {
 		btnGreen.setMinimumSize(new Dimension(80, 30));
 		btnGreen.setBackground(Color.GREEN);
 		btnGreen.setOpaque(true);
+		btnGreen.setBorderPainted(false);
 	}
 	private void createBlueBtn() {
 		btnBlue = new JButton("");
@@ -190,6 +212,7 @@ public class Board extends JPanel {
 		btnBlue.setMinimumSize(new Dimension(80, 30));
 		btnBlue.setBackground(Color.BLUE);
 		btnBlue.setOpaque(true);
+		btnBlue.setBorderPainted(false);
 	}
 	private void createYellowBtn() {
 		btnYellow = new JButton("");
@@ -207,6 +230,7 @@ public class Board extends JPanel {
 		btnYellow.setMinimumSize(new Dimension(80, 30));
 		btnYellow.setBackground(Color.YELLOW);
 		btnYellow.setOpaque(true);
+		btnYellow.setBorderPainted(false);
 	}
 	private void createRedBtn() {
 		btnRed = new JButton("");
@@ -224,6 +248,7 @@ public class Board extends JPanel {
 		btnRed.setMinimumSize(new Dimension(80, 30));
 		btnRed.setBackground(Color.RED);
 		btnRed.setOpaque(true);
+		btnRed.setBorderPainted(false);
 	}
 	
 	private void paintCircle(Color c) {

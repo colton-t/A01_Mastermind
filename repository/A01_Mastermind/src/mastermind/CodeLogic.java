@@ -19,10 +19,24 @@ public class CodeLogic {
 		return secretCode;
 	}
 	
+	/**
+	 * Clears ArrayList secretCode
+	 */
+	public static void clearSecretCode() {
+		secretCode.clear();
+	}
+	
+	/**
+	 * Adds user's guess to ArrayList usersGueses
+	 * @param enum BallColors
+	 */
 	public static void addUserGuess(BallColors b) {
 		usersGuesses.add(b);
 	}
 	
+	/**
+	 * clears ArrayList usersGuesses
+	 */
 	public static void clearUserGuess() {
 		usersGuesses.clear();
 	}
@@ -55,6 +69,7 @@ public class CodeLogic {
 			for(int i = 0; i < 4; i++) {
 				if(usersGuesses.contains(pegsSecretCode.get(i)) && pegsSecretCode.get(i) != null){
 					pegResults.add(PegColors.WHITE);
+					pegResults.set(i, null);
 				}
 			}
 			//TODO display peg code

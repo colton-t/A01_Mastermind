@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextArea;
+import java.awt.Insets;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
@@ -34,7 +35,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 834, 700);
+		setBounds(100, 100, 834, 666);
 		getContentPane().setLayout(null);
 		
 		JPanel displayBoard = createBoard();
@@ -55,7 +56,7 @@ public class MainWindow extends JFrame {
 
 	private JPanel createTitlePanel() {
 		JPanel titlePanel = new JPanel();
-		titlePanel.setBounds(413, 11, 395, 609);
+		titlePanel.setBounds(413, 11, 395, 484);
 		getContentPane().add(titlePanel);
 		return titlePanel;
 	}
@@ -70,17 +71,18 @@ public class MainWindow extends JFrame {
 
 	private JTextArea createRulesTextPanel() {
 		JTextArea txtRules = new JTextArea();
+		txtRules.setMargin(new Insets(0, 0, 0, 4));
 		txtRules.setFont(new Font("Monospaced", Font.PLAIN, 11));
 		txtRules.setEditable(false);
-		txtRules.setText("Object of the game:\r\nThe computer has selected a secret combination \r\nof 4 colored pegs and you have to guess that \r\ncombination in 10 or fewer tries to win.\r\n\r\nHow to play:\r\nTo create your guess click each apparent \r\ncolored peg until you've filled the row with \r\nyour combination (you can delete your guess\r\nby clicking \"clear\" button). Then click the \r\n\"check\" button.\r\n\r\nEach time you submit a guess the machine will \r\nuse score pegs to let you know how close that\r\nguess is.\r\n\r\nFor each guess a black score peg indicates that \r\none of your pegs is the right color in the right \r\nposition. A white score peg indicates that one \r\nof your pegs is the right color in the wrong\r\nposition.\r\n\r\nUse the score to guide your next guess. \r\nIf your guess scores 4 black score pegs within \r\n10 tries, you win.\r\n\r\nTo begin a new game click the \"new game\" button.");
-		txtRules.setBounds(10, 147, 375, 439);
+		txtRules.setText(" Object of the game:\r\n The computer has selected a secret combination \r\n of 4 colored pegs and you have to guess that \r\n combination in 10 or fewer tries to win.\r\n\r\n How to play:\r\n To create your guess click each apparent \r\n colored peg until you've filled the row with \r\n your combination (you can delete your guess\r\n by clicking \"clear\" button). Then click the \r\n \"check\" button.\r\n\r\n Each time you submit a guess the machine will \r\n use score pegs to let you know how close that\r\n guess is.\r\n\r\n For each guess a black score peg indicates that \r\n one of your pegs is the right color in the right \r\n position. A white score peg indicates that one \r\n of your pegs is the right color in the wrong\r\n position.\r\n\r\n Use the score to guide your next guess. \r\n If your guess scores 4 black score pegs within \r\n 10 tries, you win.\r\n\r\n To begin a new game click the \"new game\" button.");
+		txtRules.setBounds(10, 84, 375, 390);
 		return txtRules;
 	}
 
 	private JPanel createOutputPanel() {
 		JPanel outputPanel = new JPanel();
-		outputPanel.setBackground(Color.DARK_GRAY);
-		outputPanel.setBounds(413, 631, 395, 201);
+		outputPanel.setBackground(Color.LIGHT_GRAY);
+		outputPanel.setBounds(415, 509, 395, 123);
 		return outputPanel;
 	}
 
