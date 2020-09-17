@@ -26,27 +26,35 @@ public class CodeLogic {
 		usersGuesses.clear();
 	}
 	
+	/**
+	 * Checks the users guess to the generated secret code.
+	 */
 	public static void checkGuess() {
 		//Compares the secret code with the users guess
 		if(secretCode.equals(usersGuesses)) {
 			System.out.println("YOU WIN!");
 			//TODO Process win conditions here
 		} else {
-			System.out.println("Process pegs");
-			ArrayList<BallColors> pegsUserGuess = (ArrayList<BallColors>) usersGuesses.clone();
+			//create a copy of the secret code
+			ArrayList<BallColors> pegsSecretCode = (ArrayList<BallColors>) secretCode.clone();
+			
+			//iterate through to find black pegs (where color and index equal)
 			for(int i = 0; i < 4; i++) {
-				if(secretCode.contains(pegsUserGuess.get(i))){ //if the secret code even has the element
-					if(secretCode.get(i) == pegsUserGuess.get(i)) { //if on the same index
-						//right guess, right position (black peg)
+				if(usersGuesses.contains(pegsSecretCode.get(i))){ 
+					if(usersGuesses.get(i).equals(pegsSecretCode.get(i))) { 						//right guess, right position (black peg)
 						pegResults.add(PegColors.BLACK);
-						pegsUserGuess.set(i, null);
-					} else { //right guess, wrong position (white peg)
-						pegResults.add(PegColors.WHITE);
-						pegsUserGuess.set(i, null);
+						pegsSecretCode.set(i, null);
 					}
 				}
 			}
-			//display pegs here
+			
+			//iterate through to find white pegs (remaining pegs where color equal
+			for(int i = 0; i < 4; i++) {
+				if(usersGuesses.contains(pegsSecretCode.get(i)) && pegsSecretCode.get(i) != null){
+					pegResults.add(PegColors.WHITE);
+				}
+			}
+			//TODO display peg code
 			System.out.println(pegResults);
 			
 			pegResults.clear();
