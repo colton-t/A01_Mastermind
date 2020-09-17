@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 834, 880);
+		setBounds(100, 100, 834, 700);
 		getContentPane().setLayout(null);
 		
 		JPanel displayBoard = createBoard();
@@ -86,7 +86,7 @@ public class MainWindow extends JFrame {
 
 	private JPanel createBoard() {
 		JPanel displayBoard = new JPanel();
-		displayBoard.setBounds(10, 11, 393, 821);
+		displayBoard.setBounds(10, 11, 393, 621);
 		
 		displayBoard.setLayout(new BorderLayout(0, 0));
 		displayBoard.setBackground(Color.GRAY);
