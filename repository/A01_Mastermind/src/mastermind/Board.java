@@ -136,6 +136,9 @@ public class Board extends JPanel {
 				CodeLogic.generateSecretCode();
 				MainWindow.changeLblOutput("Good Luck!");
 				gameOver = false;
+				panel.removeAll();
+				panel.revalidate();
+		        panel.repaint();
 			}
 		});
 		btnNewGame.setBounds(288, 500, 100, 30);
