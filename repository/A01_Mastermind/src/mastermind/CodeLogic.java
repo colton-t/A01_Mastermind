@@ -8,13 +8,13 @@ public class CodeLogic {
 	private static Random rand = new Random();
 	public static ArrayList<BallColors> secretCode = new ArrayList<>();
 	public static ArrayList<BallColors> usersGuesses = new ArrayList<>();
-	public static ArrayList<PegColors> pegResults = new ArrayList<>();
 	private static int turn = 1;
+	private final static int NUM_BALL_COLORS = 6;
 
 	public static ArrayList<BallColors> generateSecretCode() {
 		
 		for(int i = 0; i < 4; i++) {
-			secretCode.add(BallColors.values()[rand.nextInt(BallColors.values().length)]);
+			secretCode.add(BallColors.values()[rand.nextInt(NUM_BALL_COLORS)]);
 		}
 		System.out.println(secretCode);
 		return secretCode;
@@ -51,33 +51,40 @@ public class CodeLogic {
 		if(secretCode.equals(usersGuesses)) {
 			MainWindow.changeLblOutput("YOU WIN!");
 			Board.gameOver = true;
-			
-			//TODO Process win conditions here
 		} 
 		else {
-			//create a copy of the secret code
-			ArrayList<BallColors> pegsSecretCode = (ArrayList<BallColors>) secretCode.clone();
+			ArrayList<BallColors> tempSecretCode = (ArrayList<BallColors>) secretCode.clone();
+			ArrayList<BallColors> tempUserGuesses = (ArrayList<BallColors>) usersGuesses.clone();
 			
-			//iterate through to find black pegs (where color and index equal)
-			for(int i = 0; i < 4; i++) {
-				if(usersGuesses.contains(pegsSecretCode.get(i))){ 
-					if(usersGuesses.get(i).equals(pegsSecretCode.get(i))) { 						//right guess, right position (black peg)
-						pegResults.add(PegColors.BLACK);
-						pegsSecretCode.set(i, null);
+			int blackPegs = 0;
+			for(int i = 0; i < secretCode.size(); i++) {
+				if(tempSecretCode.get(i).equals(tempUserGuesses.get(i))) {
+					blackPegs++;
+					tempSecretCode.set(i, BallColors.BLANK);
+					tempUserGuesses.set(i, BallColors.BLANK);
+				}
+			}
+			
+			int whitePegs = 0;
+			for (int i = 0; i < secretCode.size(); i++) {
+				if(tempSecretCode.get(i).equals(BallColors.BLANK)) {
+					continue;
+				}
+				for(int j = 0; j < secretCode.size(); j++) {
+					if (tempUserGuesses.get(j).equals(BallColors.BLANK)) {
+						continue;
 					}
+					if (tempSecretCode.get(i).equals(tempUserGuesses.get(j))) {
+						whitePegs++;
+						tempSecretCode.set(i, BallColors.BLANK);
+						tempUserGuesses.set(j, BallColors.BLANK);
+					}
+					
 				}
 			}
 			
-			//iterate through to find white pegs (remaining pegs where color equal
-			for(int i = 0; i < 4; i++) {
-				if(usersGuesses.contains(pegsSecretCode.get(i)) && pegsSecretCode.get(i) != null){
-					pegResults.add(PegColors.WHITE);
-				}
-			}
-			//TODO display peg code
-			System.out.println(pegResults);
+			System.out.println("whitePegs: " + whitePegs + "   blackPegs: " + blackPegs);
 			
-			pegResults.clear();
 			usersGuesses.clear();
 			
 		}

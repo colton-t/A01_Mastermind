@@ -60,7 +60,6 @@ public class Board extends JPanel {
 		
 		
 		//create control buttons
-		//create new game button
 		createCheckBtn();
 		add(btnCheck);
 		
@@ -85,6 +84,7 @@ public class Board extends JPanel {
 				turn = 9;
 				guess = 0;
 				repaint();
+				CodeLogic.usersGuesses.clear();
 				CodeLogic.clearSecretCode();
 				CodeLogic.generateSecretCode();
 				MainWindow.changeLblOutput("Good Luck!");
@@ -94,7 +94,10 @@ public class Board extends JPanel {
 		btnNewGame.setBounds(288, 500, 100, 30);
 	}
 	
-	public void revealSecretCode() {
+	/**
+	 * Displays the secret code at the top of the board.
+	 */
+	private void revealSecretCode() {
 		ArrayList<BallColors> temp = CodeLogic.getSecretCode();
 		Graphics g = getGraphics();
 		int x = 0;
@@ -182,7 +185,7 @@ public class Board extends JPanel {
 		btnCheck.setBounds(46, 500, 80, 30);
 		btnCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(guess > 3 && turn > 0) {
+				if(guess == 4 && turn > 0) {
 					turn--;
 					guess = 0;
 					CodeLogic.checkGuess();
@@ -190,7 +193,7 @@ public class Board extends JPanel {
 						revealSecretCode();
 					}
 				}
-				else if(turn == 0) {
+				else if(turn == 0 && guess == 4) {
 					CodeLogic.loseGame();
 					gameOver = true;
 					turn--;
