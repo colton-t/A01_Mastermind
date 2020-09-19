@@ -91,8 +91,8 @@ public class Board extends JPanel {
 	 */
 	public static void setLblPegs(int blackPegs, int whitePegs) {
 		//for testing only DELETE UPON FINAL VERSION
-		blackPegs = 0;
-		whitePegs = 0;
+		blackPegs = 2;
+		whitePegs = 2;
 		
 		//x and y values used to create the group of four squares
 		int xAdjustment = 0;
@@ -101,7 +101,7 @@ public class Board extends JPanel {
 		for(int i = 0; i <= 3; i++) {
 			lblNewLabel = new JLabel(" ");
 			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, 468 - (i * 10) + yAdjustment, 10, 10);
+			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, (turn+1) * 52 + yAdjustment, 10, 10);
 			
 			if(blackPegs > 0) { //set color of squares to black for black pegs
 				lblNewLabel.setBackground(Color.black);
