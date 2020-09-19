@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.JLabel;
-
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Board extends JPanel {
 	
 	private static JLabel lblNewLabel = new JLabel(" ");
 	private static JPanel panel = new JPanel();
+	private static Border blackline = BorderFactory.createLineBorder(Color.DARK_GRAY);
 	
 
 	/**
@@ -90,10 +92,6 @@ public class Board extends JPanel {
 	 * @param whitePegs number of white pegs
 	 */
 	public static void setLblPegs(int blackPegs, int whitePegs) {
-		//for testing only DELETE UPON FINAL VERSION
-		blackPegs = 2;
-		whitePegs = 2;
-		
 		//x and y values used to create the group of four squares
 		int xAdjustment = 0;
 		int yAdjustment = 0;
@@ -101,7 +99,7 @@ public class Board extends JPanel {
 		for(int i = 0; i <= 3; i++) {
 			lblNewLabel = new JLabel(" ");
 			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, (turn+1) * 45 + yAdjustment + 62, 10, 10);
+			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, (turn+1) * 45 + yAdjustment + 64, 14, 14);
 			
 			if(blackPegs > 0) { //set color of squares to black for black pegs
 				lblNewLabel.setBackground(Color.black);
@@ -110,14 +108,15 @@ public class Board extends JPanel {
 				lblNewLabel.setBackground(Color.white);
 				whitePegs--;
 			} else { // set empty / wrong pegs to dark gray
-				lblNewLabel.setBackground(Color.DARK_GRAY);
+				lblNewLabel.setBackground(Color.LIGHT_GRAY);
+				lblNewLabel.setBorder(blackline);
 			}
 			panel.add(lblNewLabel);
 			if(i % 2 == 0) {
-				xAdjustment += 12;
+				xAdjustment += 17;
 			} else {
-				yAdjustment -= 12;
-				xAdjustment -= 12;
+				yAdjustment -= 17;
+				xAdjustment -= 17;
 			}
 			
 			panel.revalidate();
