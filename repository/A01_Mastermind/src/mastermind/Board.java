@@ -101,7 +101,7 @@ public class Board extends JPanel {
 		for(int i = 0; i <= 3; i++) {
 			lblNewLabel = new JLabel(" ");
 			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, (turn+1) * 52 + yAdjustment, 10, 10);
+			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, (turn+1) * 45 + yAdjustment + 62, 10, 10);
 			
 			if(blackPegs > 0) { //set color of squares to black for black pegs
 				lblNewLabel.setBackground(Color.black);
