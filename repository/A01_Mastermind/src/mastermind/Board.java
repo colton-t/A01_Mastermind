@@ -31,9 +31,9 @@ public class Board extends JPanel {
 	private JButton btnClear;
 	private JButton btnNewGame;
 	
-	private static JLabel lblNewLabel = new JLabel(" ");
-	private static JPanel panel = new JPanel();
-	private static Border blackline = BorderFactory.createLineBorder(Color.DARK_GRAY);
+	private static JLabel lblNewLabel = new JLabel(" "); //JLabel for the feedback pegs
+	private static JPanel panel = new JPanel(); //JPanel which hosts the feedback pegs
+	private static Border blackline = BorderFactory.createLineBorder(Color.DARK_GRAY); //Border for blank pegs
 	
 
 	/**
@@ -75,15 +75,18 @@ public class Board extends JPanel {
 		createNewGame();
 		add(btnNewGame);
 		
-		
-		//create pegs
-		panel.setBackground(Color.LIGHT_GRAY);
-		panel.setBounds(288, 0, 115, 499);
+		//create peg container
+		createPegsContainer();
 		add(panel);
-		panel.setLayout(null);
 		
 		//create secret code
 		CodeLogic.generateSecretCode();
+	}
+
+	private void createPegsContainer() {
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBounds(288, 0, 115, 499);
+		panel.setLayout(null);
 	}
 
 	/**
@@ -136,6 +139,8 @@ public class Board extends JPanel {
 				CodeLogic.generateSecretCode();
 				MainWindow.changeLblOutput("Good Luck!");
 				gameOver = false;
+				
+				//removes any previous pegs and redraws peg container
 				panel.removeAll();
 				panel.revalidate();
 		        panel.repaint();

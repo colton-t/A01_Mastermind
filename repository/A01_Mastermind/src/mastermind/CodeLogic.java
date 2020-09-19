@@ -83,7 +83,7 @@ public class CodeLogic {
 				}
 			}
 			
-			System.out.println("whitePegs: " + whitePegs + "   blackPegs: " + blackPegs);
+			//sends number of pegs to board to represent graphically
 			Board.setLblPegs(blackPegs, whitePegs);
 			usersGuesses.clear();
 			
