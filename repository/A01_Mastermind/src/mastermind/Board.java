@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -14,8 +15,8 @@ import java.awt.event.ActionEvent;
 public class Board extends JPanel {
 	
 	public static boolean gameOver = false;
-	private int turn = 9;
-	public  int guess = 0;
+	private static int turn = 9; //starts at bottom goes up
+	public static  int guess = 0;
 	private int rows = 10;
 	private int coloumns = 4;
 	
@@ -28,6 +29,9 @@ public class Board extends JPanel {
 	private JButton btnCheck;
 	private JButton btnClear;
 	private JButton btnNewGame;
+	
+	private static JLabel lblNewLabel = new JLabel(" ");
+	private static JPanel panel = new JPanel();
 	
 
 	/**
@@ -71,12 +75,56 @@ public class Board extends JPanel {
 		
 		
 		//create pegs
-		//TODO
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBounds(288, 0, 115, 499);
+		add(panel);
+		panel.setLayout(null);
 		
 		//create secret code
 		CodeLogic.generateSecretCode();
 	}
 
+	/**
+	 * Generates JLabel pegs based on passed black and white peg values
+	 * @param blackPegs number of black pegs
+	 * @param whitePegs number of white pegs
+	 */
+	public static void setLblPegs(int blackPegs, int whitePegs) {
+		//for testing only DELETE UPON FINAL VERSION
+		blackPegs = 0;
+		whitePegs = 0;
+		
+		//x and y values used to create the group of four squares
+		int xAdjustment = 0;
+		int yAdjustment = 0;
+		System.out.println(blackPegs + whitePegs);
+		for(int i = 0; i <= 3; i++) {
+			lblNewLabel = new JLabel(" ");
+			lblNewLabel.setOpaque(true);
+			lblNewLabel.setBounds((guess+1) * 20 + xAdjustment, 468 - (i * 10) + yAdjustment, 10, 10);
+			
+			if(blackPegs > 0) { //set color of squares to black for black pegs
+				lblNewLabel.setBackground(Color.black);
+				blackPegs--;
+			} else if(whitePegs > 0) { //set color of squares to white for white pegs
+				lblNewLabel.setBackground(Color.white);
+				whitePegs--;
+			} else { // set empty / wrong pegs to dark gray
+				lblNewLabel.setBackground(Color.DARK_GRAY);
+			}
+			panel.add(lblNewLabel);
+			if(i % 2 == 0) {
+				xAdjustment += 12;
+			} else {
+				yAdjustment -= 12;
+				xAdjustment -= 12;
+			}
+			
+			panel.revalidate();
+	        panel.repaint();
+		}
+	}
+	
 	private void createNewGame() {
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {

@@ -84,7 +84,7 @@ public class CodeLogic {
 			}
 			
 			System.out.println("whitePegs: " + whitePegs + "   blackPegs: " + blackPegs);
-			
+			Board.setLblPegs(blackPegs, whitePegs);
 			usersGuesses.clear();
 			
 		}
