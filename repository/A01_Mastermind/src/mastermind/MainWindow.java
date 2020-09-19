@@ -14,6 +14,7 @@ import java.awt.Insets;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
+	public static JLabel lblOutput;
 	/**
 	 * Launch the application.
 	 */
@@ -83,6 +84,13 @@ public class MainWindow extends JFrame {
 		JPanel outputPanel = new JPanel();
 		outputPanel.setBackground(Color.LIGHT_GRAY);
 		outputPanel.setBounds(415, 509, 395, 123);
+		outputPanel.setLayout(null);
+		
+		lblOutput = new JLabel("Good Luck!");
+		lblOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutput.setFont(new Font("Kohinoor Telugu", Font.BOLD, 32));
+		lblOutput.setBounds(6, 6, 383, 111);
+		outputPanel.add(lblOutput);
 		return outputPanel;
 	}
 
@@ -97,5 +105,10 @@ public class MainWindow extends JFrame {
 		displayBoard.add(board, BorderLayout.CENTER);
 		
 		return displayBoard;
+	}
+	
+	public static String changeLblOutput(String s) {
+		lblOutput.setText(s);
+		return s;
 	}
 }

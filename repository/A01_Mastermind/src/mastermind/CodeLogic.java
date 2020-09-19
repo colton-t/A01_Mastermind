@@ -1,5 +1,6 @@
 package mastermind;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -48,7 +49,9 @@ public class CodeLogic {
 		turn++;
 		//Compares the secret code with the users guess
 		if(secretCode.equals(usersGuesses)) {
-			System.out.println("YOU WIN!");
+			MainWindow.changeLblOutput("YOU WIN!");
+			Board.gameOver = true;
+			
 			//TODO Process win conditions here
 		} 
 		else {
@@ -69,7 +72,6 @@ public class CodeLogic {
 			for(int i = 0; i < 4; i++) {
 				if(usersGuesses.contains(pegsSecretCode.get(i)) && pegsSecretCode.get(i) != null){
 					pegResults.add(PegColors.WHITE);
-					pegResults.set(i, null);
 				}
 			}
 			//TODO display peg code
@@ -81,7 +83,14 @@ public class CodeLogic {
 		}
 	}
 	
+	public static ArrayList<BallColors> getSecretCode() {
+		return secretCode;
+	}
+
+	/**
+	 * Notifies player of loss after 10 turns
+	 */
 	public static void loseGame() {
-		System.out.println("You Lose.");
+		MainWindow.changeLblOutput("YOU LOSE!");
 	}
 }

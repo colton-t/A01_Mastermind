@@ -7,13 +7,15 @@ import javax.swing.JPanel;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel {
 	
+	public static boolean gameOver = false;
 	private int turn = 9;
-	public int guess = 0;
+	public  int guess = 0;
 	private int rows = 10;
 	private int coloumns = 4;
 	
@@ -85,9 +87,55 @@ public class Board extends JPanel {
 				repaint();
 				CodeLogic.clearSecretCode();
 				CodeLogic.generateSecretCode();
+				MainWindow.changeLblOutput("Good Luck!");
+				gameOver = false;
 			}
 		});
 		btnNewGame.setBounds(288, 500, 100, 30);
+	}
+	
+	public void revealSecretCode() {
+		ArrayList<BallColors> temp = CodeLogic.getSecretCode();
+		Graphics g = getGraphics();
+		int x = 0;
+		for(BallColors balls : temp) {
+			if(balls.equals(BallColors.RED)) {
+				g.setColor(Color.RED);
+				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
+				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.YELLOW)) {
+				g.setColor(Color.YELLOW);
+				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
+				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.BLUE)) {
+				g.setColor(Color.BLUE);
+				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
+				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.GREEN)) {
+				g.setColor(Color.GREEN);
+				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
+				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.WHITE)) {
+				g.setColor(Color.WHITE);
+				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
+				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.BLACK)) {
+				g.setColor(Color.BLACK);
+				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
+				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
+				x++;
+			}
+		}
 	}
 
 	@Override
@@ -114,13 +162,15 @@ public class Board extends JPanel {
 		btnClear.setBounds(136, 500, 80, 30);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guess = 0;
-				CodeLogic.usersGuesses.clear(); //clear the users guesses from guess array.
-				Graphics g = getGraphics();
-				g.setColor(Color.gray);
-				for (int x = 0; x < coloumns; x++) {
-					g.drawOval((x + 1) * 60, (turn + 1) * 45, 30, 30);
-					g.fillOval((x + 1) * 60, (turn + 1) * 45, 30, 30);
+				if(gameOver == false) {
+					guess = 0;
+					CodeLogic.usersGuesses.clear(); //clear the users guesses from guess array.
+					Graphics g = getGraphics();
+					g.setColor(Color.gray);
+					for (int x = 0; x < coloumns; x++) {
+						g.drawOval((x + 1) * 60, (turn + 1) * 45, 30, 30);
+						g.fillOval((x + 1) * 60, (turn + 1) * 45, 30, 30);
+					}
 				}
 			}
 		});
@@ -136,9 +186,13 @@ public class Board extends JPanel {
 					turn--;
 					guess = 0;
 					CodeLogic.checkGuess();
+					if (gameOver == true) {
+						revealSecretCode();
+					}
 				}
 				else if(turn == 0) {
 					CodeLogic.loseGame();
+					gameOver = true;
 					turn--;
 				}
 			}
@@ -151,7 +205,7 @@ public class Board extends JPanel {
 		btnBlack.setBounds(136, 538, 80, 30);
 		btnBlack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (guess < 4) {
+				if (guess < 4 && gameOver == false) {
 					paintCircle(Color.BLACK);
 					guess++;
 					CodeLogic.addUserGuess(BallColors.BLACK); // //add black to guess array
@@ -168,7 +222,7 @@ public class Board extends JPanel {
 		btnWhite.setBounds(226, 538, 80, 30);
 		btnWhite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (guess < 4) {
+				if (guess < 4 && gameOver == false) {
 					paintCircle(Color.WHITE);
 					guess++;
 					CodeLogic.addUserGuess(BallColors.WHITE); // //add white to guess array
@@ -185,7 +239,7 @@ public class Board extends JPanel {
 		btnGreen.setBounds(46, 538, 80, 30);
 		btnGreen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (guess < 4) {
+				if (guess < 4 && gameOver == false) {
 					paintCircle(Color.GREEN);
 					guess++;
 					CodeLogic.addUserGuess(BallColors.GREEN); //add green to guess array
@@ -202,7 +256,7 @@ public class Board extends JPanel {
 		btnBlue.setBounds(226, 580, 80, 30);
 		btnBlue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (guess < 4) {
+				if (guess < 4 && gameOver == false) {
 					paintCircle(Color.BLUE);
 					guess++;
 					CodeLogic.addUserGuess(BallColors.BLUE); // //add blue to guess array
@@ -219,7 +273,7 @@ public class Board extends JPanel {
 		btnYellow.setBounds(136, 580, 80, 30);
 		btnYellow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (guess < 4) {
+				if (guess < 4 && gameOver == false) {
 					paintCircle(Color.YELLOW);
 					guess++;
 					CodeLogic.addUserGuess(BallColors.YELLOW); // //add yellow to guess array
@@ -238,7 +292,7 @@ public class Board extends JPanel {
 		
 		btnRed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (guess < 4) {
+				if (guess < 4 && gameOver == false) {
 					paintCircle(Color.RED);
 					guess++;
 					CodeLogic.addUserGuess(BallColors.RED); //add red to guess array
@@ -258,7 +312,4 @@ public class Board extends JPanel {
 		g.fillOval((guess+1) * 60, (turn+1) * 45, 30, 30);
 	}
 	
-	public int getGuess() {
-		return guess;
-	}
 }
