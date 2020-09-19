@@ -107,7 +107,7 @@ public class Board extends JPanel {
 			} else if(whitePegs > 0) { //set color of squares to white for white pegs
 				lblNewLabel.setBackground(Color.white);
 				whitePegs--;
-			} else { // set empty / wrong pegs to dark gray
+			} else { // set empty / wrong pegs to light gray border
 				lblNewLabel.setBackground(Color.LIGHT_GRAY);
 				lblNewLabel.setBorder(blackline);
 			}
