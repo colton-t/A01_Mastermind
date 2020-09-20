@@ -12,6 +12,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * Creates the board, including the graphics and buttons
+ * @author Trevor Colton & Austin Fashimpaur
+ *
+ */
 @SuppressWarnings("serial")
 public class Board extends JPanel {
 	
@@ -98,7 +103,6 @@ public class Board extends JPanel {
 		//x and y values used to create the group of four squares
 		int xAdjustment = 0;
 		int yAdjustment = 0;
-		System.out.println(blackPegs + whitePegs);
 		for(int i = 0; i <= 3; i++) {
 			lblNewLabel = new JLabel(" ");
 			lblNewLabel.setOpaque(true);
@@ -131,6 +135,7 @@ public class Board extends JPanel {
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Resets all values to start a new game
 				turn = 9;
 				guess = 0;
 				repaint();
@@ -147,72 +152,6 @@ public class Board extends JPanel {
 			}
 		});
 		btnNewGame.setBounds(288, 500, 100, 30);
-	}
-	
-	/**
-	 * Displays the secret code at the top of the board.
-	 */
-	private void revealSecretCode() {
-		ArrayList<BallColors> temp = CodeLogic.getSecretCode();
-		Graphics g = getGraphics();
-		int x = 0;
-		for(BallColors balls : temp) {
-			if(balls.equals(BallColors.RED)) {
-				g.setColor(Color.RED);
-				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
-				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
-				x++;
-			}
-			if(balls.equals(BallColors.YELLOW)) {
-				g.setColor(Color.YELLOW);
-				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
-				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
-				x++;
-			}
-			if(balls.equals(BallColors.BLUE)) {
-				g.setColor(Color.BLUE);
-				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
-				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
-				x++;
-			}
-			if(balls.equals(BallColors.GREEN)) {
-				g.setColor(Color.GREEN);
-				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
-				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
-				x++;
-			}
-			if(balls.equals(BallColors.WHITE)) {
-				g.setColor(Color.WHITE);
-				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
-				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
-				x++;
-			}
-			if(balls.equals(BallColors.BLACK)) {
-				g.setColor(Color.BLACK);
-				g.drawOval((x+1) * 60, (0) * 45, 30, 30);
-				g.fillOval((x+1) * 60, (0) * 45, 30, 30);
-				x++;
-			}
-		}
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.setColor(Color.GRAY);
-		for (int y = 0; y < rows; y++) {
-			for (int x = 0; x < coloumns; x++) {
-				g.drawOval((x + 1) * 60, (y + 1) * 45, 30, 30);
-				g.fillOval((x + 1) * 60, (y + 1) * 45, 30, 30);
-			}
-		}
-		for (int x =0; x < coloumns; x++) {
-			g.drawRect((x+1)*60, 2, 30, 30);
-			g.fillRect((x+1)*60, 2, 30, 30);
-			
-			g.drawOval((x+1)*60, 2, 30, 30);
-			g.fillOval((x+1)*60, 2, 30, 30);
-		}
 	}
 	
 	private void createClearBtn() {
@@ -249,7 +188,8 @@ public class Board extends JPanel {
 					}
 				}
 				else if(turn == 0 && guess == 4) {
-					CodeLogic.loseGame();
+					MainWindow.changeLblOutput("YOU LOSE!");
+					revealSecretCode();
 					gameOver = true;
 					turn--;
 				}
@@ -363,11 +303,81 @@ public class Board extends JPanel {
 		btnRed.setBorderPainted(false);
 	}
 	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(Color.GRAY);
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < coloumns; x++) {
+				g.drawOval((x + 1) * 60, (y + 1) * 45, 30, 30);
+				g.fillOval((x + 1) * 60, (y + 1) * 45, 30, 30);
+			}
+		}
+		for (int x =0; x < coloumns; x++) {
+			g.drawRect((x+1)*60, 2, 30, 30);
+			g.fillRect((x+1)*60, 2, 30, 30);
+			
+			g.drawOval((x+1)*60, 2, 30, 30);
+			g.fillOval((x+1)*60, 2, 30, 30);
+		}
+	}
+	
+	/**
+	 * Updates balls on the board with the corresponding color selected by the user.
+	 * @param Color
+	 */
 	private void paintCircle(Color c) {
 		Graphics g = getGraphics();
 		g.setColor(c);
 		g.drawOval((guess+1) * 60, (turn+1) * 45, 30, 30);
 		g.fillOval((guess+1) * 60, (turn+1) * 45, 30, 30);
+	}
+	
+	/**
+	 * Displays the secret code at the top of the board.
+	 */
+	private void revealSecretCode() {
+		ArrayList<BallColors> temp = CodeLogic.getSecretCode();
+		Graphics g = getGraphics();
+		int x = 0;
+		for(BallColors balls : temp) {
+			if(balls.equals(BallColors.RED)) {
+				g.setColor(Color.RED);
+				g.drawOval((x+1) * 60, (0), 30, 30);
+				g.fillOval((x+1) * 60, (0), 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.YELLOW)) {
+				g.setColor(Color.YELLOW);
+				g.drawOval((x+1) * 60, (0), 30, 30);
+				g.fillOval((x+1) * 60, (0), 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.BLUE)) {
+				g.setColor(Color.BLUE);
+				g.drawOval((x+1) * 60, (0), 30, 30);
+				g.fillOval((x+1) * 60, (0), 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.GREEN)) {
+				g.setColor(Color.GREEN);
+				g.drawOval((x+1) * 60, (0), 30, 30);
+				g.fillOval((x+1) * 60, (0), 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.WHITE)) {
+				g.setColor(Color.WHITE);
+				g.drawOval((x+1) * 60, (0), 30, 30);
+				g.fillOval((x+1) * 60, (0), 30, 30);
+				x++;
+			}
+			if(balls.equals(BallColors.BLACK)) {
+				g.setColor(Color.BLACK);
+				g.drawOval((x+1) * 60, (0), 30, 30);
+				g.fillOval((x+1) * 60, (0), 30, 30);
+				x++;
+			}
+		}
 	}
 	
 }

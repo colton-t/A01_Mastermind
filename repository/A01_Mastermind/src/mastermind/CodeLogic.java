@@ -1,22 +1,30 @@
 package mastermind;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Houses all logic for the secret code, including the generation of the secret code, 
+ * and checks the users guess to determine the correct feedback of white and black pegs.
+ * 
+ * @author Trevor Colton & Austin Fashimpaur
+ *
+ */
 public class CodeLogic {
 	private static Random rand = new Random();
 	public static ArrayList<BallColors> secretCode = new ArrayList<>();
 	public static ArrayList<BallColors> usersGuesses = new ArrayList<>();
-	private static int turn = 1;
 	private final static int NUM_BALL_COLORS = 6;
 
+	/**
+	 * Generates a random secretCode for the Player to guess
+	 * @return randomly generated secretCode
+	 */
 	public static ArrayList<BallColors> generateSecretCode() {
 		
 		for(int i = 0; i < 4; i++) {
 			secretCode.add(BallColors.values()[rand.nextInt(NUM_BALL_COLORS)]);
 		}
-		System.out.println(secretCode);
 		return secretCode;
 	}
 	
@@ -46,7 +54,6 @@ public class CodeLogic {
 	 * Checks the users guess to the generated secret code.
 	 */
 	public static void checkGuess() {
-		turn++;
 		//Compares the secret code with the users guess
 		if(secretCode.equals(usersGuesses)) {
 			MainWindow.changeLblOutput("YOU WIN!");
@@ -90,14 +97,11 @@ public class CodeLogic {
 		}
 	}
 	
+	/**
+	 * Getter for secretCode
+	 * @return secretCode
+	 */
 	public static ArrayList<BallColors> getSecretCode() {
 		return secretCode;
-	}
-
-	/**
-	 * Notifies player of loss after 10 turns
-	 */
-	public static void loseGame() {
-		MainWindow.changeLblOutput("YOU LOSE!");
 	}
 }
